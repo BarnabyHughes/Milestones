@@ -9,6 +9,11 @@ messages:
     - '&fThreshold: %threshold%'
     - '&fYour Progress: %progress%'
     - '&a✔ Unlocked!'
+
+  milestone-unlocked-message:
+    - ''
+    - '&a&lMILESTONE &8> %message%'
+    - ''
 milestone-trackers:
   DAMAGE_TAKEN:
     material: IRON_SWORD
@@ -20,6 +25,7 @@ milestone-trackers:
         name: '&c&lIron Ingot'
         lore:
           - '&7&o(Receive 2 iron ingots when you reach this!)'
+        message: "You took 1000 damage!"
         type: GIVE_ITEM
         values:
           - IRON_INGOT:2
@@ -27,6 +33,7 @@ milestone-trackers:
         name: '&c&lCreative Mode!'
         lore:
           - '&7&o(Receive creative mode when you reach this!)'
+        message: "You took 2000 damage!"
         type: RUN_COMMAND
         values:
           - gamemode creative %player%

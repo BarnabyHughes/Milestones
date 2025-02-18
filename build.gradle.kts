@@ -13,8 +13,11 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
-    // Corrected Spigot API reference
+    // Spigot API (make sure this file exists in the libs folder)
     compileOnly(files("libs/spigot-api-1.21.4-R0.1-SNAPSHOT.jar"))
+
+    // Gson (Google JSON library)
+    implementation("com.google.code.gson:gson:2.10.1") // Latest version
 }
 
 tasks.test {

@@ -1,10 +1,9 @@
 package me.barnaby.milestones.gui.guis;
 
-import me.barnaby.milestones.config.ConfigManager;
+import me.barnaby.milestones.data.ConfigManager;
 import me.barnaby.milestones.gui.GUI;
 import me.barnaby.milestones.gui.GUIItem;
 import me.barnaby.milestones.object.Milestone;
-import me.barnaby.milestones.object.reward.MilestoneReward;
 import me.barnaby.milestones.util.ItemBuilder;
 import me.barnaby.milestones.util.StringUtil;
 import org.bukkit.ChatColor;
@@ -13,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MilestoneRewardsGUI extends GUI {

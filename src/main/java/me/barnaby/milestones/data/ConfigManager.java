@@ -1,4 +1,4 @@
-package me.barnaby.milestones.config;
+package me.barnaby.milestones.data;
 
 import me.barnaby.milestones.object.Milestone;
 import me.barnaby.milestones.object.reward.MilestoneReward;
@@ -9,14 +9,10 @@ import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
 
 public class ConfigManager {
 
@@ -87,7 +83,7 @@ public class ConfigManager {
                     }
                 }
 
-                milestones.add(new Milestone(statistic, material, name, lore, rewards));
+                milestones.add(new Milestone(statistic, material, name, lore, rewards, section));
                 plugin.getLogger().info("Loaded milestone: " + name + " [" + statistic + "]");
 
             } catch (IllegalArgumentException e) {

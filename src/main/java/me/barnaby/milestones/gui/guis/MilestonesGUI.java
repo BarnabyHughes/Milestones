@@ -1,6 +1,6 @@
 package me.barnaby.milestones.gui.guis;
 
-import me.barnaby.milestones.config.ConfigManager;
+import me.barnaby.milestones.data.ConfigManager;
 import me.barnaby.milestones.gui.GUI;
 import me.barnaby.milestones.gui.GUIItem;
 import me.barnaby.milestones.util.StringUtil;

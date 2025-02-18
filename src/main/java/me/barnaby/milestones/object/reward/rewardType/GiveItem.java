@@ -1,5 +1,6 @@
 package me.barnaby.milestones.object.reward.rewardType;
 
+import me.barnaby.milestones.object.Milestone;
 import me.barnaby.milestones.object.reward.MilestoneReward;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,8 +11,8 @@ import java.util.List;
 public class GiveItem extends MilestoneReward {
 
 
-    public GiveItem(int threshold, ItemStack itemStack, List<String> executions) {
-        super(threshold, itemStack, executions);
+    public GiveItem(int threshold, ItemStack itemStack, List<String> executions, Milestone milestone) {
+        super(threshold, itemStack, executions, milestone);
     }
 
     @Override
