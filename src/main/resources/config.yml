@@ -11,12 +11,12 @@ milestone-trackers:
         lore:
           - "Receive 2 iron ingots when you reach this!"
         type: GIVE_ITEM
-        value:
+        values:
           - "IRON_INGOT:2"
       2000:
         name: "Creative Mode!"
         lore:
           - "Receive creative mode when you reach this!"
         type: RUN_COMMAND
-        value:
+        values:
           - "gamemode creative %player%"

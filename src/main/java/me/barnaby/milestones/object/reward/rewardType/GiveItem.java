@@ -5,12 +5,13 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class GiveItem extends MilestoneReward {
 
 
-    @Override
-    public ItemStack itemStack() {
-        return new ItemStack(Material.DIAMOND);
+    public GiveItem(int threshold, ItemStack itemStack, List<String> executions) {
+        super(threshold, itemStack, executions);
     }
 
     @Override

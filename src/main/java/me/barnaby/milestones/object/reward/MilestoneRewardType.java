@@ -2,18 +2,33 @@ package me.barnaby.milestones.object.reward;
 
 import me.barnaby.milestones.object.reward.rewardType.GiveItem;
 import me.barnaby.milestones.object.reward.rewardType.RunCommand;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public enum MilestoneRewardType {
-    GIVE_ITEM(new GiveItem()),
-    RUN_COMMAND(new RunCommand());
 
-    private final MilestoneReward reward;
+    GIVE_ITEM(GiveItem.class),
+    RUN_COMMAND(RunCommand.class);
 
-    MilestoneRewardType(MilestoneReward reward) {
-        this.reward = reward;
+    private final Class<? extends MilestoneReward> rewardClass;
+
+    MilestoneRewardType(Class<? extends MilestoneReward> rewardClass) {
+        this.rewardClass = rewardClass;
     }
 
-    public MilestoneReward getReward() {
-        return reward;
+    /**
+     * Uses reflection to instantiate the reward class dynamically.
+     */
+    public MilestoneReward createReward(int threshold, ItemStack itemStack, List<String> executions) {
+        try {
+            return rewardClass.getConstructor(int.class, ItemStack.class, List.class)
+                    .newInstance(threshold, itemStack, executions);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to instantiate reward: " + rewardClass.getSimpleName());
+        }
     }
 }
+
+
