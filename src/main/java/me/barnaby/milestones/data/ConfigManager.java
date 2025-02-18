@@ -10,6 +10,7 @@ import org.bukkit.Statistic;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,7 @@ public class ConfigManager {
      */
     private void initializeMilestones() {
         milestones.clear(); // Clear old milestones
+        System.out.println("milestones doing");
 
         ConfigurationSection milestoneSection = config.getConfigurationSection("milestone-trackers");
         if (milestoneSection == null) {
@@ -110,7 +112,14 @@ public class ConfigManager {
     public void reloadConfig() {
         plugin.reloadConfig();
         config = plugin.getConfig();
-        initializeMilestones();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                initializeMilestones();
+            }
+        }.runTaskLater(plugin, 20);
+
     }
 
     /**

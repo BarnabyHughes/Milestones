@@ -5,6 +5,7 @@ import me.barnaby.milestones.data.ConfigManager;
 import me.barnaby.milestones.data.DataManager;
 import me.barnaby.milestones.listener.PlayerListeners;
 import me.barnaby.milestones.runnable.StatisticChecker;
+import me.barnaby.milestones.session.SessionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,6 +14,7 @@ public class Milestones extends JavaPlugin {
 
     private final ConfigManager configManager = new ConfigManager(this);
     private final DataManager dataManager = new DataManager(this);
+    private final SessionManager sessionManager = new SessionManager(this);
 
     @Override
     public void onEnable() {
@@ -38,6 +40,10 @@ public class Milestones extends JavaPlugin {
 
     public DataManager getDataManager() {
         return dataManager;
+    }
+
+    public SessionManager getSessionManager() {
+        return sessionManager;
     }
 
     private void sendEnableMessage() {

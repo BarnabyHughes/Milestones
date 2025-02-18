@@ -1,5 +1,6 @@
 package me.barnaby.milestones.gui.guis;
 
+import me.barnaby.milestones.Milestones;
 import me.barnaby.milestones.data.ConfigManager;
 import me.barnaby.milestones.gui.GUI;
 import me.barnaby.milestones.gui.GUIItem;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class MilestoneRewardsGUI extends GUI {
 
-    public MilestoneRewardsGUI(String name, Milestone milestone, ConfigManager configManager, Player player) {
+    public MilestoneRewardsGUI(String name, Milestone milestone, Milestones milestones, Player player) {
         super(name, 5);
 
         outline(new GUIItem(new ItemStack(Material.GRAY_STAINED_GLASS_PANE)));
@@ -33,11 +34,11 @@ public class MilestoneRewardsGUI extends GUI {
 
                 if (progress >= reward.getThreshold()) {
                     rewardItem.setType(Material.LIME_STAINED_GLASS_PANE);
-                    newLore = configManager.getConfig().getStringList(
+                    newLore = milestones.getConfigManager().getConfig().getStringList(
                             "messages.unlocked-lore");
                 }
                 else
-                    newLore = configManager.getConfig().getStringList(
+                    newLore = milestones.getConfigManager().getConfig().getStringList(
                             "messages.locked-lore"
                     );
 
@@ -59,6 +60,21 @@ public class MilestoneRewardsGUI extends GUI {
                 Material.REDSTONE)
                 .name(ChatColor.RED + "" + ChatColor.BOLD + "Back").build(),
                 inventoryClickEvent ->
-                new MilestonesGUI(configManager, player).open(player)));
+                new MilestonesGUI(milestones, player).open(player)));
+
+        if (player.hasPermission("milestones.admin")) {
+            setItem(44, new GUIItem(
+                    new ItemBuilder(Material.EMERALD_BLOCK)
+                            .name(ChatColor.GREEN + "Admin Control")
+                            .lore(ChatColor.WHITE + "Click to add a new milestone reward")
+                            .build(),
+                    event -> {
+                        event.setCancelled(true);
+                        // Assuming your main plugin class provides access to the SessionManager:
+                        milestones.getSessionManager().addStatisticRewardAdderConversation(player, milestone);
+                    }
+            ));
+        }
     }
+
 }
