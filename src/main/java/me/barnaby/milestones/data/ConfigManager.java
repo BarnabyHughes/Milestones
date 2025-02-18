@@ -63,6 +63,10 @@ public class ConfigManager {
                 String name = section.getString("name", "&7Unknown Milestone");
                 List<String> lore = section.getStringList("lore");
 
+                Milestone milestone = new Milestone(statistic, material, name, lore, new ArrayList<>(), section);
+                milestones.add(milestone);
+
+
                 List<MilestoneReward> rewards = new ArrayList<>();
                 ConfigurationSection rewardsSection = section.getConfigurationSection("milestone-rewards");
                 if (rewardsSection != null) {
@@ -79,11 +83,12 @@ public class ConfigManager {
                                 .lore(rewardSection.getStringList("lore"));
                         rewards.add(rewardType.
                                 createReward(milestoneThreshold, itemBuilder.build(),
-                                        rewardSection.getStringList("values")));
+                                        rewardSection.getStringList("values"), milestone));
                     }
                 }
 
-                milestones.add(new Milestone(statistic, material, name, lore, rewards, section));
+                milestone.getRewards().addAll(rewards);
+
                 plugin.getLogger().info("Loaded milestone: " + name + " [" + statistic + "]");
 
             } catch (IllegalArgumentException e) {

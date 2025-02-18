@@ -20,7 +20,7 @@ public abstract class MilestoneReward {
         this.milestone = milestone;
     }
 
-    public abstract void execute(Player player, String execution);
+    public abstract void execute(Player player);
 
     public int getThreshold() {
         return threshold;

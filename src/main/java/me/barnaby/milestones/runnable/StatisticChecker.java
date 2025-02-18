@@ -4,7 +4,10 @@ import me.barnaby.milestones.Milestones;
 import me.barnaby.milestones.data.ConfigManager;
 import me.barnaby.milestones.util.StringUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Objects;
 
 public class StatisticChecker extends BukkitRunnable {
 
@@ -30,7 +33,12 @@ public class StatisticChecker extends BukkitRunnable {
                             .forEach(msg ->
                                     player.sendMessage(StringUtil.format(
                                             msg.replace("%message%",
-                                                    milestone.getSection().getString("message")))));
+                                                    Objects.requireNonNull(milestone.getSection().getString(
+                                                            "milestone-rewards." +
+                                                            milestoneReward.getThreshold() + ".message"))))));
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                    milestoneReward.execute(player);
+                    milestones.getDataManager().claimReward(milestone.getName(), milestoneReward.getThreshold(), player.getUniqueId());
                 });
             });
         });

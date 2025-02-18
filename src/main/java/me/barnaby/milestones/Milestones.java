@@ -4,6 +4,7 @@ import me.barnaby.milestones.commands.MilestoneCommand;
 import me.barnaby.milestones.data.ConfigManager;
 import me.barnaby.milestones.data.DataManager;
 import me.barnaby.milestones.listener.PlayerListeners;
+import me.barnaby.milestones.runnable.StatisticChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +19,9 @@ public class Milestones extends JavaPlugin {
         sendEnableMessage();
 
         Bukkit.getPluginManager().registerEvents(new PlayerListeners(), this);
+
+        new StatisticChecker(this).runTaskTimer(this,0,
+                100);
         this.getCommand("milestones").setExecutor(new MilestoneCommand(this));
     }
 

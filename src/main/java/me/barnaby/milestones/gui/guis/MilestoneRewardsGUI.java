@@ -31,9 +31,11 @@ public class MilestoneRewardsGUI extends GUI {
                 List<String> lore = meta.getLore();
                 List<String> newLore;
 
-                if (progress >= reward.getThreshold())
-                     newLore = configManager.getConfig().getStringList(
+                if (progress >= reward.getThreshold()) {
+                    rewardItem.setType(Material.LIME_STAINED_GLASS_PANE);
+                    newLore = configManager.getConfig().getStringList(
                             "messages.unlocked-lore");
+                }
                 else
                     newLore = configManager.getConfig().getStringList(
                             "messages.locked-lore"

@@ -16,12 +16,14 @@ public class GiveItem extends MilestoneReward {
     }
 
     @Override
-    public void execute(Player player, String execution) {
-        String[] splitted = execution.split(":");
+    public void execute(Player player) {
+        getExecutions().forEach(execution -> {
+            String[] splitted = execution.split(":");
 
-        Material material = Material.getMaterial(splitted[0]);
-        int amount = Integer.parseInt(splitted[1]);
+            Material material = Material.getMaterial(splitted[0]);
+            int amount = Integer.parseInt(splitted[1]);
 
-        player.getInventory().addItem(new ItemStack(material, amount));
+            player.getInventory().addItem(new ItemStack(material, amount));
+        });
     }
 }

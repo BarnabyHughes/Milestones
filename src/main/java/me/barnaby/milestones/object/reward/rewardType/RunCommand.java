@@ -2,6 +2,7 @@ package me.barnaby.milestones.object.reward.rewardType;
 
 import me.barnaby.milestones.object.Milestone;
 import me.barnaby.milestones.object.reward.MilestoneReward;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,7 +16,12 @@ public class RunCommand extends MilestoneReward {
     }
 
     @Override
-    public void execute(Player player, String execution) {
-
+    public void execute(Player player) {
+        getExecutions().forEach(execution -> {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                    execution.replace("%player%", player.getName()));
+        });
     }
+
+
 }

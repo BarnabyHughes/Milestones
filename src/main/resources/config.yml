@@ -6,8 +6,8 @@ messages:
     - '&c✖ Locked!'
   unlocked-lore: # lore to add onto the bottom of a reward item if locked
     - ''
-    - '&fThreshold: %threshold%'
-    - '&fYour Progress: %progress%'
+    - '&eThreshold: &c%threshold%'
+    - '&eYour Progress: &c%progress%'
     - '&a✔ Unlocked!'
 
   milestone-unlocked-message:
@@ -25,7 +25,7 @@ milestone-trackers:
         name: '&c&lIron Ingot'
         lore:
           - '&7&o(Receive 2 iron ingots when you reach this!)'
-        message: "You took 1000 damage!"
+        message: '&fYou took 1000 damage!'
         type: GIVE_ITEM
         values:
           - IRON_INGOT:2
@@ -33,7 +33,7 @@ milestone-trackers:
         name: '&c&lCreative Mode!'
         lore:
           - '&7&o(Receive creative mode when you reach this!)'
-        message: "You took 2000 damage!"
+        message: You took 2000 damage!
         type: RUN_COMMAND
         values:
           - gamemode creative %player%
