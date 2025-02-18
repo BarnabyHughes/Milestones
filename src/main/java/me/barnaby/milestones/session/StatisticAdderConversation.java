@@ -53,6 +53,7 @@ public class StatisticAdderConversation implements ConversationAbandonedListener
         String displayName = (String) context.getSessionData("name");
         Material material = (Material) context.getSessionData("material");
         List<String> lore = (List<String>) context.getSessionData("lore");
+        String blockType = (String) context.getSessionData("block");
         if (stat == null || displayName == null || material == null || lore == null) {
             context.getForWhom().sendRawMessage(ChatColor.RED + "Milestone addition incomplete. Operation canceled.");
             return;
@@ -68,14 +69,20 @@ public class StatisticAdderConversation implements ConversationAbandonedListener
             context.getForWhom().sendRawMessage(ChatColor.RED + "A milestone for " + statKey + " already exists.");
             return;
         }
+        if (blockType != null) {
+            statKey+=":" + blockType.toUpperCase();
+        }
+
         ConfigurationSection newMilestone = trackers.createSection(statKey);
         newMilestone.set("material", material.toString());
         newMilestone.set("name", displayName);
         newMilestone.set("lore", lore);
+
         // Create an empty section for rewards (to be filled in later)
         newMilestone.createSection("milestone-rewards");
         configManager.saveConfig();
         context.getForWhom().sendRawMessage(ChatColor.GREEN + "Milestone added successfully!");
+        configManager.reloadConfig();
     }
 
     // --- Conversation Prompts ---
@@ -83,7 +90,7 @@ public class StatisticAdderConversation implements ConversationAbandonedListener
     private class StatisticPrompt extends StringPrompt {
         @Override
         public String getPromptText(ConversationContext context) {
-            return ChatColor.YELLOW + "Enter the statistic type (e.g. DAMAGE_TAKEN) or type 'cancel' to abort:";
+            return ChatColor.YELLOW + "Enter the statistic type (e.g. DAMAGE_TAKEN, MINE_BLOCK) or type 'cancel' to abort:";
         }
 
         @Override
@@ -94,11 +101,40 @@ public class StatisticAdderConversation implements ConversationAbandonedListener
             try {
                 Statistic stat = Statistic.valueOf(input.toUpperCase());
                 context.setSessionData("statistic", stat);
+                // If it's MINE_BLOCK or PLACE_BLOCK, prompt for block type
+                if (stat == Statistic.MINE_BLOCK) {
+                    return new BlockTypePrompt();
+                }
                 return new NamePrompt();
             } catch (IllegalArgumentException e) {
                 context.getForWhom().sendRawMessage(ChatColor.RED + "Invalid statistic type. Try again or type 'cancel'.");
                 return this;
             }
+        }
+    }
+
+    private class BlockTypePrompt extends StringPrompt {
+        @Override
+        public String getPromptText(ConversationContext context) {
+            return ChatColor.YELLOW + "Enter the block type to track (e.g., STONE) or type 'all' for all blocks:";
+        }
+
+        @Override
+        public Prompt acceptInput(ConversationContext context, String input) {
+            if (input.equalsIgnoreCase("cancel")) {
+                return Prompt.END_OF_CONVERSATION;
+            }
+            if (input.equalsIgnoreCase("all")) {
+                context.setSessionData("block", "all");
+                return new NamePrompt();
+            }
+            Material blockMaterial = Material.matchMaterial(input.toUpperCase());
+            if (blockMaterial == null || !blockMaterial.isBlock()) {
+                context.getForWhom().sendRawMessage(ChatColor.RED + "Invalid block type. Please enter a valid block type or 'all'.");
+                return this;
+            }
+            context.setSessionData("block", blockMaterial.toString());
+            return new NamePrompt();
         }
     }
 
@@ -171,19 +207,23 @@ public class StatisticAdderConversation implements ConversationAbandonedListener
             String name = (String) context.getSessionData("name");
             Material material = (Material) context.getSessionData("material");
             List<String> lore = (List<String>) context.getSessionData("lore");
-            return ChatColor.AQUA + "Please confirm the milestone details:\n" +
-                    ChatColor.GRAY + "Statistic: " + stat.toString() + "\n" +
+            String block = (String) context.getSessionData("block");
+            String confirmationMessage = ChatColor.AQUA + "Please confirm the milestone details:\n" +
+                    ChatColor.GRAY + "Statistic: " + stat + "\n" +
                     "Name: " + name + "\n" +
-                    "Material: " + material.toString() + "\n" +
-                    "Lore: " + lore.toString() + "\n" +
+                    "Material: " + material + "\n";
+            if (block != null) {
+                confirmationMessage += "Block Type: " + block + "\n";
+            }
+            confirmationMessage += "Lore: " + lore.toString() + "\n" +
                     "Type 'yes' to confirm or 'no' to cancel:";
+            return confirmationMessage;
         }
 
         @Override
         public Prompt acceptInput(ConversationContext context, String input) {
             if (input.equalsIgnoreCase("yes")) {
-                plugin.getConfigManager().saveConfig();
-                plugin.getConfigManager().reloadConfig();
+                // The milestone will be added in conversationFinished
                 return Prompt.END_OF_CONVERSATION;
             } else {
                 context.getForWhom().sendRawMessage(ChatColor.RED + "Milestone addition canceled.");

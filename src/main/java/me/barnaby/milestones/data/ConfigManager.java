@@ -60,12 +60,19 @@ public class ConfigManager {
             if (section == null) continue;
 
             try {
-                Statistic statistic = Statistic.valueOf(key.toUpperCase());
+                String finalKey = key;
+                String[] strings = key.split(":");
+                Material block = null;
+                if (strings.length > 1) {
+                    finalKey = strings[0];
+                    block = Material.valueOf(strings[1].toUpperCase());
+                }
+                Statistic statistic = Statistic.valueOf(finalKey.toUpperCase());
                 Material material = Material.valueOf(section.getString("material", "STONE").toUpperCase());
                 String name = section.getString("name", "&7Unknown Milestone");
                 List<String> lore = section.getStringList("lore");
 
-                Milestone milestone = new Milestone(statistic, material, name, lore, new ArrayList<>(), section);
+                Milestone milestone = new Milestone(statistic, material, name, lore, new ArrayList<>(), section, block);
                 milestones.add(milestone);
 
 

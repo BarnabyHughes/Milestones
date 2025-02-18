@@ -1,7 +1,6 @@
 package me.barnaby.milestones.gui.guis;
 
 import me.barnaby.milestones.Milestones;
-import me.barnaby.milestones.data.ConfigManager;
 import me.barnaby.milestones.gui.GUI;
 import me.barnaby.milestones.gui.GUIItem;
 import me.barnaby.milestones.util.ItemBuilder;
@@ -26,7 +25,13 @@ public class MilestonesGUI extends GUI {
 
         // Loop through all milestones and add them to the GUI
         milestones.getConfigManager().getMilestones().forEach(milestone -> {
-            int progress = player.getStatistic(milestone.getStatistic()); // Get player's progress
+            String progress = "" + milestone.getStatistic(player);
+            if (milestone.getStatistic() == Statistic.PLAY_ONE_MINUTE ||
+            milestone.getStatistic() == Statistic.TIME_SINCE_DEATH
+            || milestone.getStatistic() == Statistic.TIME_SINCE_REST) {
+                progress = StringUtil.formatMinutes(
+                        player.getStatistic(Statistic.PLAY_ONE_MINUTE));
+            }
 
             // Create an item to represent the milestone
             ItemStack milestoneItem = new ItemStack(milestone.getMaterial());
@@ -37,8 +42,9 @@ public class MilestonesGUI extends GUI {
 
                 List<String> newLore = new ArrayList<>();
 
+                String finalProgress = progress;
                 milestone.getLore().forEach(line -> newLore.add(StringUtil.format(line
-                        .replace("%value%", progress + ""))));
+                        .replace("%value%", finalProgress))));
 
                 meta.setLore(newLore);
 

@@ -22,7 +22,7 @@ public class MilestoneRewardsGUI extends GUI {
 
         outline(new GUIItem(new ItemStack(Material.GRAY_STAINED_GLASS_PANE)));
 
-        int progress = player.getStatistic(milestone.getStatistic()); // Get the player's progress
+        int progress = milestone.getStatistic(player);
 
         // Loop through milestone rewards and display them
         milestone.getRewards().forEach(reward -> {
@@ -36,8 +36,7 @@ public class MilestoneRewardsGUI extends GUI {
                     rewardItem.setType(Material.LIME_STAINED_GLASS_PANE);
                     newLore = milestones.getConfigManager().getConfig().getStringList(
                             "messages.unlocked-lore");
-                }
-                else
+                } else
                     newLore = milestones.getConfigManager().getConfig().getStringList(
                             "messages.locked-lore"
                     );
@@ -60,7 +59,7 @@ public class MilestoneRewardsGUI extends GUI {
                 Material.REDSTONE)
                 .name(ChatColor.RED + "" + ChatColor.BOLD + "Back").build(),
                 inventoryClickEvent ->
-                new MilestonesGUI(milestones, player).open(player)));
+                        new MilestonesGUI(milestones, player).open(player)));
 
         if (player.hasPermission("milestones.admin")) {
             setItem(44, new GUIItem(
@@ -76,5 +75,4 @@ public class MilestoneRewardsGUI extends GUI {
             ));
         }
     }
-
 }

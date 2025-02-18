@@ -35,6 +35,6 @@ public abstract class MilestoneReward {
     }
 
     public boolean isUnlocked(Player player) {
-        return player.getStatistic(milestone.getStatistic()) >= threshold;
+        return milestone.getStatistic(player) >= threshold;
     }
 }
