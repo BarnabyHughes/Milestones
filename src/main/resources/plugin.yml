@@ -4,3 +4,5 @@ main: me.barnaby.milestones.Milestones
 author: Barnaby
 description: A fancy milestones plugin!
 api-version: 1.21
+commands:
+  milestones:

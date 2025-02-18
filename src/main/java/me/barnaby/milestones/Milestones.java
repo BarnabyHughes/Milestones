@@ -1,14 +1,22 @@
 package me.barnaby.milestones;
 
+import me.barnaby.milestones.commands.MilestoneCommand;
+import me.barnaby.milestones.config.ConfigManager;
+import me.barnaby.milestones.listener.PlayerListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Milestones extends JavaPlugin {
 
+    private final ConfigManager configManager = new ConfigManager(this);
+
     @Override
     public void onEnable() {
         sendEnableMessage();
+
+        Bukkit.getPluginManager().registerEvents(new PlayerListeners(), this);
+        this.getCommand("milestones").setExecutor(new MilestoneCommand(this));
     }
 
 
@@ -16,6 +24,10 @@ public class Milestones extends JavaPlugin {
     @Override
     public void onDisable() {
         sendDisableMessage();
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
     }
 
     private void sendEnableMessage() {

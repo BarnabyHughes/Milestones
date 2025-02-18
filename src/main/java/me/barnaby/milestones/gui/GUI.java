@@ -56,6 +56,10 @@ public class GUI implements InventoryHolder {
         inventory.setItem(index, guiItem.item());
     }
 
+    public void open(Player player) {
+        player.openInventory(inventory);
+    }
+
     public void onClick(InventoryClickEvent event) {}
     public void onDrag(InventoryDragEvent event) {}
     public void onClose(InventoryCloseEvent event) {}
