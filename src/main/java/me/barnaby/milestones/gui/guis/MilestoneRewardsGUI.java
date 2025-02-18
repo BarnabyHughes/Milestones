@@ -27,7 +27,7 @@ public class MilestoneRewardsGUI extends GUI {
 
         // Loop through milestone rewards and display them
         milestone.getRewards().forEach(reward -> {
-            ItemStack rewardItem = reward.getItemStack() != null ? reward.getItemStack() : new ItemStack(Material.CHEST);
+            ItemStack rewardItem = reward.getItemStack() != null ? reward.getItemStack().clone() : new ItemStack(Material.CHEST);
             ItemMeta meta = rewardItem.getItemMeta();
             if (meta != null) {
                 List<String> lore = meta.getLore();

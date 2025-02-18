@@ -44,7 +44,7 @@ public class MilestonesGUI extends GUI {
             // Add the item to the GUI and open rewards GUI on click
             addItem(new GUIItem(milestoneItem, event -> {
                 event.setCancelled(true);
-                new MilestoneRewardsGUI("Rewards: " + milestone.getName(), milestone, configManager, player).open(player);
+                new MilestoneRewardsGUI("Rewards: " + StringUtil.format(milestone.getName()), milestone, configManager, player).open(player);
             }));
         });
     }
