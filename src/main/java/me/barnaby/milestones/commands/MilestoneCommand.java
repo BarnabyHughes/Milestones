@@ -32,6 +32,9 @@ public class MilestoneCommand implements CommandExecutor {
                 case "help":
                 default:
                     // print help message
+                    player.sendMessage(ChatColor.AQUA + "Milestones Plugin v" + milestones.getDescription().getVersion());
+                    player.sendMessage(ChatColor.AQUA + "Coded by: " + String.join(", ", milestones.getDescription().getAuthors()));
+                    player.sendMessage(ChatColor.GREEN + "Use " + ChatColor.YELLOW + "/milestones open" + ChatColor.GREEN + " to view your milestones.");
                     break;
             }
 
