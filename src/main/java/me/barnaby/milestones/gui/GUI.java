@@ -14,6 +14,7 @@ public class GUI implements InventoryHolder {
     private final int rows;
     private final Inventory inventory;
     private final Player owner;
+    private Player viewer;
     private final GUIItem[] items;
 
     public GUI(String name, int rows) {
@@ -56,7 +57,14 @@ public class GUI implements InventoryHolder {
         inventory.setItem(index, guiItem.item());
     }
 
+    public void addItem(GUIItem guiItem) {
+        int i = inventory.firstEmpty();
+
+        setItem(i, guiItem);
+    }
+
     public void open(Player player) {
+        this.viewer = player;
         player.openInventory(inventory);
     }
 
@@ -99,5 +107,9 @@ public class GUI implements InventoryHolder {
 
     public Player getOwner() {
         return this.owner;
+    }
+
+    public Player getViewer() {
+        return this.viewer;
     }
 }

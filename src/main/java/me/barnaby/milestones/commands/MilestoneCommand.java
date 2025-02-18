@@ -18,18 +18,19 @@ public class MilestoneCommand implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (!(commandSender instanceof Player player)) return true;
 
-        if (strings.length == 0) new MilestonesGUI().open(player);
+        if (strings.length == 0) new MilestonesGUI(milestones.getConfigManager(), player).open(player);
         else if (strings.length == 1) {
             switch (strings[0]) {
                 case "reload":
                     milestones.getConfigManager().reloadConfig();
-                    player.sendMessage(milestones.getConfigManager().getString("test", "111"));
+                    player.sendMessage(
+                            milestones.getConfigManager().getConfig().getString("test", "111"));
                     break;
                     // later
                 case "edit":
                     // later
                 case "open":
-                    new MilestonesGUI().open(player);
+                    new MilestonesGUI(milestones.getConfigManager(), player).open(player);
                     break;
                 case "help":
                 default:
