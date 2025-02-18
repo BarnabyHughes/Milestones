@@ -26,10 +26,8 @@ public class MilestonesGUI extends GUI {
         // Loop through all milestones and add them to the GUI
         milestones.getConfigManager().getMilestones().forEach(milestone -> {
             String progress = "" + milestone.getStatistic(player);
-            if (milestone.getStatistic() == Statistic.PLAY_ONE_MINUTE ||
-            milestone.getStatistic() == Statistic.TIME_SINCE_DEATH
-            || milestone.getStatistic() == Statistic.TIME_SINCE_REST) {
-                progress = StringUtil.formatMinutes(
+            if (milestone.getStatistic() == Statistic.PLAY_ONE_MINUTE) {
+                progress = StringUtil.formatTicks(
                         player.getStatistic(Statistic.PLAY_ONE_MINUTE));
             }
 

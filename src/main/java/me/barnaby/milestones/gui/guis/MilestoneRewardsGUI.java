@@ -9,11 +9,13 @@ import me.barnaby.milestones.util.ItemBuilder;
 import me.barnaby.milestones.util.StringUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MilestoneRewardsGUI extends GUI {
 
@@ -42,9 +44,16 @@ public class MilestoneRewardsGUI extends GUI {
                     );
 
                 newLore.forEach(line -> {
-                    lore.add(StringUtil.format(line
-                            .replace("%progress%", progress + "")
-                            .replace("%threshold%", reward.getThreshold() + "")));
+                    if (milestone.getStatistic() == Statistic.PLAY_ONE_MINUTE) {
+                        lore.add(StringUtil.format(line
+                                .replace("%progress%", StringUtil.formatTicks(progress))
+                                .replace("%threshold%", StringUtil.formatTicks(reward.getThreshold()))));
+                    }
+                    else {
+                        lore.add(StringUtil.format(line
+                                .replace("%progress%", progress + "")
+                                .replace("%threshold%", reward.getThreshold() + "")));
+                    }
                 });
                 meta.setLore(lore);
 
