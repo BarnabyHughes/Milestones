@@ -16,6 +16,7 @@ messages:
     - ''
 milestone-trackers:
   DAMAGE_TAKEN:
+    reset-every: 172800 # example for every 2 days it resets (in seconds)
     material: IRON_SWORD
     name: '&c&lDamage Taken'
     lore:
@@ -37,3 +38,31 @@ milestone-trackers:
         type: RUN_COMMAND
         values:
           - gamemode creative %player%
+  MINE_BLOCK:DIRT:
+    material: DIAMOND_PICKAXE
+    name: '&c&lDirt Mined'
+    lore:
+      - '&fMined: &c%value%'
+    milestone-rewards:
+      '1000':
+        name: '&c&lIron Ingot'
+        lore:
+          - '&7&o(Receive 2 iron ingots when you reach this!)'
+        message: '&fYou mined 1000 dirt!'
+        type: GIVE_ITEM
+        values:
+          - IRON_INGOT:2
+  PLAY_ONE_MINUTE:
+    material: CLOCK
+    name: '&c&lTime Played'
+    lore:
+      - '&fPlayed: &c%value%'
+    milestone-rewards:
+      '1000':
+        name: '&c&lIron Ingot'
+        lore:
+          - '&7&o(Receive 2 iron ingots when you reach this!)'
+        message: '&fYou played a lot of time!'
+        type: GIVE_ITEM
+        values:
+          - IRON_INGOT:2

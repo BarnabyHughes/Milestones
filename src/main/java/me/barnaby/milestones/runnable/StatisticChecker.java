@@ -2,6 +2,7 @@ package me.barnaby.milestones.runnable;
 
 import me.barnaby.milestones.Milestones;
 import me.barnaby.milestones.data.ConfigManager;
+import me.barnaby.milestones.object.Milestone;
 import me.barnaby.milestones.util.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -21,6 +22,10 @@ public class StatisticChecker extends BukkitRunnable {
 
     @Override
     public void run() {
+        for (Milestone milestone : milestones.getConfigManager().getMilestones()) {
+            if (System.currentTimeMillis() > milestone.getNextReset()) milestone.reset();
+        }
+
         Bukkit.getOnlinePlayers().forEach(player -> {
             milestones.getConfigManager().getMilestones().forEach(milestone -> {
                 milestone.getRewards().forEach(milestoneReward -> {

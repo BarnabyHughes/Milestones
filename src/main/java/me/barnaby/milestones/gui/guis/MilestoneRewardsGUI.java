@@ -7,6 +7,7 @@ import me.barnaby.milestones.gui.GUIItem;
 import me.barnaby.milestones.object.Milestone;
 import me.barnaby.milestones.util.ItemBuilder;
 import me.barnaby.milestones.util.StringUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Statistic;

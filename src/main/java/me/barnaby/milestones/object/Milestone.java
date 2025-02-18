@@ -1,11 +1,13 @@
 package me.barnaby.milestones.object;
 
 import me.barnaby.milestones.object.reward.MilestoneReward;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +20,7 @@ public class Milestone {
     private final List<MilestoneReward> rewards;
     private final ConfigurationSection section;
     private final Material blockType;
+    private long nextReset;
 
     public Milestone(Statistic statistic, Material material, String name, List<String> lore, List<MilestoneReward> rewards, ConfigurationSection section, Material blockType) {
         this.statistic = statistic;
@@ -27,6 +30,24 @@ public class Milestone {
         this.rewards = rewards;
         this.section = section;
         this.blockType = blockType;
+
+        if (section.contains("reset-every")) {
+            reset();
+        }
+    }
+
+    public void reset() {
+        nextReset = System.currentTimeMillis() + (section.getInt("reset-every") * 1000L);
+
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.setStatistic(statistic, 0);
+        });
+        Arrays.stream(Bukkit.getOfflinePlayers()).forEach(offlinePlayer -> {
+            offlinePlayer.setStatistic(statistic, 0);
+        });
+
+        System.out.println("Reset statistic " + statistic);
+
     }
 
     public Statistic getStatistic() {
@@ -59,5 +80,9 @@ public class Milestone {
 
     public ConfigurationSection getSection() {
         return section;
+    }
+
+    public long getNextReset() {
+        return nextReset;
     }
 }
