@@ -31,19 +31,20 @@ public class MilestonesGUI extends GUI {
                 meta.setDisplayName(
                         StringUtil.format(milestone.getName()));
 
-                List<String> lore = new ArrayList<>(milestone.getLore());
-                lore.add("");
-                lore.add("§eProgress: §f" + progress);
-                meta.setLore(lore);
+                List<String> newLore = new ArrayList<>();
+
+                milestone.getLore().forEach(line -> newLore.add(StringUtil.format(line
+                        .replace("%value%", progress + ""))));
+
+                meta.setLore(newLore);
 
                 milestoneItem.setItemMeta(meta);
             }
 
             // Add the item to the GUI and open rewards GUI on click
             addItem(new GUIItem(milestoneItem, event -> {
-                event.getWhoClicked().sendMessage("test");
                 event.setCancelled(true);
-                new MilestoneRewardsGUI("Rewards: " + milestone.getName(), milestone, player).open(player);
+                new MilestoneRewardsGUI("Rewards: " + milestone.getName(), milestone, configManager, player).open(player);
             }));
         });
     }

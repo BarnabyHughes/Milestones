@@ -4,6 +4,7 @@ import me.barnaby.milestones.object.Milestone;
 import me.barnaby.milestones.object.reward.MilestoneReward;
 import me.barnaby.milestones.object.reward.MilestoneRewardType;
 import me.barnaby.milestones.util.ItemBuilder;
+import me.barnaby.milestones.util.StringUtil;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.configuration.ConfigurationSection;
@@ -77,7 +78,8 @@ public class ConfigManager {
                         MilestoneRewardType rewardType = MilestoneRewardType.valueOf(rewardSection.getString("type"));
 
                         ItemBuilder itemBuilder = new ItemBuilder(
-                                Material.DIAMOND).name(rewardSection.getString("name"))
+                                Material.RED_STAINED_GLASS_PANE).name(
+                                        StringUtil.format(rewardSection.getString("name")))
                                 .lore(rewardSection.getStringList("lore"));
                         rewards.add(rewardType.
                                 createReward(milestoneThreshold, itemBuilder.build(),

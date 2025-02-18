@@ -10,6 +10,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
@@ -69,7 +70,10 @@ public class ItemBuilder {
     }
 
     public ItemBuilder lore(List<String> lore) {
-        return meta(meta -> meta.setLore(lore));
+        List<String> newLore = new ArrayList<>();
+        lore.forEach(line -> newLore.add(StringUtil.format(line)));
+
+        return meta(meta -> meta.setLore(newLore));
     }
 
     public ItemBuilder damage(short damage) {
