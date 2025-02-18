@@ -35,7 +35,7 @@ public class ConfigManager {
 
         // Load the configuration
         config = plugin.getConfig();
-        config.options().copyDefaults(true);
+        config.options().copyDefaults(false);
         saveConfig();
 
         // Load all milestones from config
@@ -47,7 +47,6 @@ public class ConfigManager {
      */
     private void initializeMilestones() {
         milestones.clear(); // Clear old milestones
-        System.out.println("milestones doing");
 
         ConfigurationSection milestoneSection = config.getConfigurationSection("milestone-trackers");
         if (milestoneSection == null) {

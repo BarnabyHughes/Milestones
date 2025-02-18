@@ -23,7 +23,8 @@ public class StatisticChecker extends BukkitRunnable {
     @Override
     public void run() {
         for (Milestone milestone : milestones.getConfigManager().getMilestones()) {
-            if (System.currentTimeMillis() > milestone.getNextReset()) milestone.reset();
+            if (milestone.getSection().contains("next-reset"))
+                if (System.currentTimeMillis() > milestone.getNextReset()) milestone.reset();
         }
 
         Bukkit.getOnlinePlayers().forEach(player -> {

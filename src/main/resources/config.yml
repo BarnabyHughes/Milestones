@@ -58,7 +58,15 @@ milestone-trackers:
     lore:
       - '&fPlayed: &c%value%'
     milestone-rewards:
-      '1000':
+      '2000':
+        name: '&c&lIron Ingot'
+        lore:
+          - '&7&o(Receive 2 iron ingots when you reach this!)'
+        message: '&fYou played a lot of time!'
+        type: GIVE_ITEM
+        values:
+          - IRON_INGOT:2
+      '10000':
         name: '&c&lIron Ingot'
         lore:
           - '&7&o(Receive 2 iron ingots when you reach this!)'

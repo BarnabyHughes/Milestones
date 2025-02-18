@@ -39,12 +39,22 @@ public class Milestone {
     public void reset() {
         nextReset = System.currentTimeMillis() + (section.getInt("reset-every") * 1000L);
 
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            player.setStatistic(statistic, 0);
-        });
-        Arrays.stream(Bukkit.getOfflinePlayers()).forEach(offlinePlayer -> {
-            offlinePlayer.setStatistic(statistic, 0);
-        });
+        if (statistic == Statistic.MINE_BLOCK) {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                player.setStatistic(statistic, blockType, 0);
+            });
+            Arrays.stream(Bukkit.getOfflinePlayers()).forEach(offlinePlayer -> {
+                offlinePlayer.setStatistic(statistic, blockType,0);
+            });
+        }
+        else {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                player.setStatistic(statistic, 0);
+            });
+            Arrays.stream(Bukkit.getOfflinePlayers()).forEach(offlinePlayer -> {
+                offlinePlayer.setStatistic(statistic, 0);
+            });
+        }
 
         System.out.println("Reset statistic " + statistic);
 
