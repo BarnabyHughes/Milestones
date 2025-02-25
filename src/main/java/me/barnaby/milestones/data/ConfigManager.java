@@ -64,7 +64,8 @@ public class ConfigManager {
                 Material block = null;
                 if (strings.length > 1) {
                     finalKey = strings[0];
-                    block = Material.valueOf(strings[1].toUpperCase());
+                    if (strings[1].equalsIgnoreCase("ALL")) block = Material.CLOCK;
+                    else block = Material.valueOf(strings[1].toUpperCase());
                 }
                 Statistic statistic = Statistic.valueOf(finalKey.toUpperCase());
                 Material material = Material.valueOf(section.getString("material", "STONE").toUpperCase());
@@ -100,6 +101,7 @@ public class ConfigManager {
                 plugin.getLogger().info("Loaded milestone: " + name + " [" + statistic + "]");
 
             } catch (IllegalArgumentException e) {
+                e.printStackTrace();
                 plugin.getLogger().warning("Invalid milestone in config: " + key);
             }
         }

@@ -47,4 +47,8 @@ public class StringUtil {
         int minutes = (int) ((ticks / 20) / 60);
         return formatMinutes(minutes);
     }
+
+    public static String formatDistance(int cm) {
+        return cm / 100 + "m";
+    }
 }

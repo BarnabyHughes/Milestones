@@ -49,6 +49,7 @@ public class StatisticAdderConversation implements ConversationAbandonedListener
     }
 
     private void conversationFinished(ConversationContext context) {
+        System.out.println("conversation finished");
         Statistic stat = (Statistic) context.getSessionData("statistic");
         String displayName = (String) context.getSessionData("name");
         Material material = (Material) context.getSessionData("material");
@@ -70,6 +71,7 @@ public class StatisticAdderConversation implements ConversationAbandonedListener
             return;
         }
         if (blockType != null) {
+            System.out.println("adding block");
             statKey+=":" + blockType.toUpperCase();
         }
 

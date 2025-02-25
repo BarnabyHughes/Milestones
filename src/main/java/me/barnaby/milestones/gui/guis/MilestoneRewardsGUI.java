@@ -67,7 +67,13 @@ public class MilestoneRewardsGUI extends GUI {
                         lore.add(StringUtil.format(line
                                 .replace("%progress%", StringUtil.formatTicks(progress))
                                 .replace("%threshold%", StringUtil.formatTicks(reward.getThreshold()))));
-                    } else {
+                    }
+                    else if (milestone.getStatistic().name().contains("ONE_CM")) {
+                        lore.add(StringUtil.format(line
+                                .replace("%progress%", StringUtil.formatDistance(progress))
+                                .replace("%threshold%", StringUtil.formatDistance(reward.getThreshold()))));
+                    }
+                    else {
                         lore.add(StringUtil.format(line
                                 .replace("%progress%", Integer.toString(progress))
                                 .replace("%threshold%", Integer.toString(reward.getThreshold()))));

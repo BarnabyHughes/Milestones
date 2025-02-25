@@ -95,6 +95,13 @@ public class Milestone {
     public int getStatistic(Player player) {
         if (statistic == Statistic.MINE_BLOCK) {
             // Check that blockType is defined before retrieving the value.
+            if (blockType == Material.CLOCK) {
+                int total = 0;
+                for (Material material1 : Material.values()) {
+                    total+=player.getStatistic(Statistic.MINE_BLOCK, material1);
+                }
+                return total;
+            }
             if (blockType != null)
                 return player.getStatistic(Statistic.MINE_BLOCK, blockType);
         }

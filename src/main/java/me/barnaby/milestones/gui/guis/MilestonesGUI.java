@@ -30,6 +30,9 @@ public class MilestonesGUI extends GUI {
                 progress = StringUtil.formatTicks(
                         player.getStatistic(Statistic.PLAY_ONE_MINUTE));
             }
+            else if (milestone.getStatistic().name().contains("ONE_CM")) {
+                progress = StringUtil.formatDistance(milestone.getStatistic(player));
+            }
 
             // Create an item to represent the milestone
             ItemStack milestoneItem = new ItemStack(milestone.getMaterial());
